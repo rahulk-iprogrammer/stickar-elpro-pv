@@ -1,0 +1,95 @@
+@media screen and (min-width: 480px) and (orientation: landscape) {
+  .autoOreintations {
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+    background-image: url("../assets/images/Verticle_Error.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    pointer-events: auto;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    z-index: 9999999999;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  .inner-panel {
+    display: none;
+  }
+ 
+}
+
+@media (orientation: portrait) {
+  .autoOreintations {
+    flex-direction: row;
+  }
+}
+p{
+  margin: 0;
+}
+.overite {
+  display: grid;
+  height: 100%;
+}
+
+.panelDiv .MuiAccordionSummary-expandIcon {
+  display: none;
+}
+.rewardsWrap .MuiAccordionSummary-content {
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+
+.privilege-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+
+.privilege-item:last-child {
+  border-bottom: none;
+}
+.leftArrow .MuiIconButton-edgeEnd {  
+  margin-top: 0px;
+  padding-top: 0;
+}
+.panelDiv {
+  border-bottom: 1px solid #989898 !important;
+}
+.rewardsWrap .MuiCollapse-wrapper,
+.rewardsWrap .MuiCollapse-wrapperInner .MuiAccordionSummary-root {
+  background: #f5f5f5;
+}
+.rewardsWrap .MuiCollapse-wrapperInner .MuiAccordionSummary-root {
+  align-items: start;
+  padding: 12px;
+}
+.rewardsWrap.MuiPaper-elevation1,
+.rewardsWrap .MuiPaper-elevation1 {
+  box-shadow: none;
+}
+
+.qr-code-wrapper div {
+  /* width: 360px; */
+}
+
+.qr-code-wrapper button {
+  background-color: #3077AC;
+}
+
+.colorUsed {
+  color: #1a1818 !important;
+}
