@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import maintainance from "../../assets/images/maintainance.svg";
 import background_maintainance from "../../assets/images/background_maintainance.svg";
 import malllogo from "../../assets/icons/instruction_dialog/logo192.png";
-import logo from "../../assets/icons/instruction_dialog/logo.png";
+import logo from "../../assets/icons/instruction_dialog/logo.jpg";
 import BOOMER1 from "../../assets/icons/more/layer-3.png";
 import BOOMER2 from "../../assets/icons/more/layer-3@2x.png";
 import BOOMER3 from "../../assets/icons/more/layer-3@3x.png";
@@ -10,7 +10,7 @@ import BOOMER3 from "../../assets/icons/more/layer-3@3x.png";
 import { Typography, Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import { whiteColor, lightGrey } from "../UI/Theme";
-import { apiData } from "../../common/common-types";
+// import { apiData } from "../../common/common-types";
 
 const styles = (theme) => {
   return {
@@ -367,7 +367,7 @@ class Maintainance extends Component {
                 verticalAlign: "middle",
               }}
             >
-              <img src={logo} className={classes.logo} />
+              <img src={logo} className={classes.logo} alt="logo" />
             </Grid>
             <Grid
               item
@@ -379,7 +379,7 @@ class Maintainance extends Component {
                 textAlign: "right",
               }}
             >
-              <img src={malllogo} className={classes.malllogo} />
+              <img src={malllogo} className={classes.malllogo} alt="logo"/>
             </Grid>
           </Grid>
           <div className={classes.imagewrapper}>
@@ -394,7 +394,7 @@ class Maintainance extends Component {
           </Typography>
           <Typography className={classes.coming_soon}>
             We are working to quash some bugs and sanitize your experience in
-            using the Infiniti Mall app. While we clean up, why don't you settle
+            using the Elpro Elite Mall app. While we clean up, why don't you settle
             in for a nice cup of coffee and that movie, which you have in your
             Watchlist?
           </Typography>
@@ -410,6 +410,7 @@ class Maintainance extends Component {
               src={BOOMER1}
               srcSet={`${BOOMER2} 2x,${BOOMER3} 3x`}
               className={classes.Layer_3}
+              alt=""
             />
           </div>
         </div>

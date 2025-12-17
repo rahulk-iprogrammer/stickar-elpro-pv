@@ -26,7 +26,7 @@ class MiBrowserDialog extends PureComponent {
               Browser not supported!
             </Typography>
             <Typography className={classes.subHeading}>
-              Due to Indian government's ban on Mi browser, Infiniti Mall does
+              Due to Indian government's ban on Mi browser, Elpro Elite Mall does
               not work optimally over here. Kindly switch over to Google Chrome
               for best results.
             </Typography>

@@ -1,9 +1,7 @@
 import {
   Button,
   Card,
-  CardContent,
   ClickAwayListener,
-  FormControl,
   Grid,
   Grow,
   InputBase,
@@ -11,9 +9,6 @@ import {
   MenuList,
   Paper,
   Popper,
-  Select,
-  Tab,
-  Tabs,
   Typography,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
@@ -28,6 +23,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import moment from "moment";
 
+// eslint-disable-next-line no-unused-vars
 const CustomInput = withStyles((theme) => ({
   root: {
     width: "96%",
@@ -106,7 +102,7 @@ class StoreLocator extends Component {
 
   // API call for scanned history based on filter and pagination
   getScannedHistory = () => {
-    const { nextpage, selectedFilter } = this.state;
+    const { selectedFilter } = this.state;
     const data = new FormData();
     data.append("period", selectedFilter);
     data.append("user_id", this?.props?.pvUserDetails?.id);
@@ -244,7 +240,9 @@ class StoreLocator extends Component {
                             display: "block",
                           }}
                         >
-                          {`Privilege: ${ele?.privilege_name ? ele?.privilege_name: '' }`}
+                          {`Privilege: ${
+                            ele?.privilege_name ? ele?.privilege_name : ""
+                          }`}
                           {/* {`Privilege: ${
                             ele.benefit_quantity
                               ? `1/${ele?.benefit_quantity}`
@@ -256,7 +254,6 @@ class StoreLocator extends Component {
                           className={classes.prodName}
                           style={{
                             marginBottom: "8px",
-                            textAlign: "left",
                             display: "block",
                             textAlign: "right",
                           }}
@@ -274,15 +271,8 @@ class StoreLocator extends Component {
                   </Grid>
                 </Card>
               ))
-            ) : !this.props.loading ?(
-              <Card
-                style={{
-                  padding: "20px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+            ) : !this.props.loading ? (
+              <Card className={classes.brandcontainer}>
                 <Grid style={{ height: "100%", margin: 0 }}>
                   <div
                     style={{
@@ -306,7 +296,7 @@ class StoreLocator extends Component {
                   </div>
                 </Grid>
               </Card>
-            ):null}
+            ) : null}
           </div>
         </div>
       </div>

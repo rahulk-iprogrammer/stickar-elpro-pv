@@ -7,7 +7,7 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "inline-flex",
-    backgroundColor: theme.palette.cards.backgroundColor,
+    backgroundColor: theme.palette.primary.main,
     maxWidth: "50%",
     minWidth: "64px",
     padding: 0,
@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     "&$selected": {
       padding: 0,
-      backgroundColor: theme.palette.footer.selected,
+      backgroundColor: theme.palette.commonIcon.golden,
     },
   },
   selected: {},
   label: {
-    color: theme.palette.footer.default,
+    color: 'white',
     fontWeight: "500",
     textTransform: "none",
     fontSize: "16px",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "8px",
     },
     "&$selected": {
-      color: "#000000",
+      color: theme.palette.text.primary,
       fontSize: "16px",
       [theme.breakpoints.down("641")]: {
         fontSize: "14px",
@@ -75,7 +75,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PvBottomNavigationAction = React.memo((props) => {
-
   const classes = useStyles();
   return (
     <BottomNavigationAction
