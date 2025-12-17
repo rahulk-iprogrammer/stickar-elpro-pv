@@ -108,8 +108,8 @@
     "lightPrimaryColor": "#4e9bbf",
     "lightPrimaryColor2": "#4e9bbf"
   },
-  "10075": {
-    "primaryOrange": "#424530",
+  "10076": {
+    "primaryOrange": "#211f20",
     "globalBackground": "#F5F5F5",
     "errorRed": "#f44336",
     "color": "#211f20",
@@ -121,19 +121,20 @@
     "headerTextColor": "#feffff",
     "progressBar": "#e5e9ed",
     "progressDefault": "#fac64f",
-    "selectedTab": "#5e6247",
+    "selectedTab": "#cce4ee",
     "top": "#ececec",
     "gold": "#e2c13c",
-    "headerBottomBorder": "#f8ba7c",
+    "headerBottomBorder": "#f1d2db",
     "dashBoardTier": "#d9b93a",
     "green": "#58AC22",
     "lightgreen": "#25d366",
     "maroonRed": "#dc3939",
     "skyBlue": "#32b7e8",
     "disabledField": "#f1f1f1",
-    "faq_qna_background": "#fbead8",
-    "lightPrimaryColor": "#f7f3c8",
-    "red": "#ec4343"
+    "faq_qna_background": "#cce4ee",
+    "lightPrimaryColor": "#f1d2db",
+    "lightPrimaryColor2": "#f1d2db",
+    "goldenColor": "#fece73"
   },
   "default": {
     "primaryOrange": "#F7942F",

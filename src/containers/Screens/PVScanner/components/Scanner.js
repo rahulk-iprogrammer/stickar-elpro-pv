@@ -8,7 +8,7 @@ import QrReader from "react-qr-reader";
 import { apiData } from "../../../../common/common-types";
 import { stockAPI } from "../../../../common/axiosInstance";
 import { openAlertBox } from "../../../../common/AlertMessage/AlertMessage";
-import { decrypt, encrypt } from "../../../../crypto-helper";
+// import { decrypt, encrypt } from "../../../../crypto-helper";
 import startScanning from "../../../../assets/images/download.svg";
 import moment from "moment";
 
@@ -29,7 +29,7 @@ class Scanner extends Component {
   componentDidMount() {
     // Get the URL parameters
 
-    let { customerId, productId, url } = this?.props?.urlDetails || {};
+    let { customerId, url } = this?.props?.urlDetails || {};
     if (url && customerId) {
       // Call handleScan if the id is present
       this.handleScan(this?.props?.urlDetails);
@@ -60,93 +60,78 @@ class Scanner extends Component {
         typeof data === "string"
           ? Object.fromEntries(urlParams.entries())
           : { ...data };
-      if((this?.props?.pvUserDetails?.user_type=='parking' && paramsObject?.privilegeType!=3) || 
-        (this?.props?.pvUserDetails?.user_type=='dining' && (paramsObject?.privilegeType!=4 || this?.props?.pvUserDetails?.shop_id!=paramsObject?.brandId)) ||
-        !['parking', 'dining'].includes(this?.props?.pvUserDetails?.user_type) || 
-        (paramsObject?.privilegeType != 3 && paramsObject?.privilegeType != 4) || null || undefined){
-        this.props.history.push("/pv-notify", {
-          isSuccess: false,
-          reason: "Invalid / Ineligible offer",
-        });        this.props.showLoader(false);
-        return
-      }
-      if (paramsObject?.mobileNo && paramsObject?.productId) {
-        let selectedProDetails = null;
-        this.setState({
-          ...this.state,
-          ...paramsObject,
-        });
 
-        const formDataProductDetails = new URLSearchParams();
-        formDataProductDetails.append(
-          "product_merchant_id",
-          paramsObject?.productId
-        );
-        formDataProductDetails.append("product_id", 0);
-        formDataProductDetails.append("customer_id", paramsObject?.customerId);
-        formDataProductDetails.append("merchant_id", apiData.merchant_id);
-        formDataProductDetails.append("platform", apiData.pv_platform);
-        formDataProductDetails.append("is_privilege", 1);
+      const userType = this?.props?.pvUserDetails?.user_type;
+      // const allowedRoles = ["default", "parking", "dining"];
+      // const allowedPrivileges = [1, 3, 4];
+      // const invalidUserType = !allowedRoles.includes(userType);
 
-        // Get product details API call
-        const productDetails = await stockAPI(
-          formDataProductDetails,
-          "POST",
-          "/getProductDetails",
-          null,
-          null,
-          undefined,
-          true
-        );
+      console.log("uSER tYPE", userType);
+      console.log('brand id ', paramsObject?.brandId)
+      console.log('shop id ', this?.props?.pvUserDetails?.shop_id)
+      // console.log("ALLOWED rOLES", allowedRoles);
+      // console.log("Invalid User Tyoe", invalidUserType);
 
-        if (
-          productDetails?.response?.productDetails?.length &&
-          productDetails?.statusCode === 100
-        ) {
-          selectedProDetails = productDetails?.response?.productDetails?.filter(
-            (x) => x.id === paramsObject?.productId
-          );
-        } else {
-          this.setState({ isScanning: false });
-          this.props.showLoader(false);
+      // const invalidPrivilege = !allowedPrivileges.includes(
+      //   Number(paramsObject?.privilegeType)
+      // );
 
-          this.props.history.push("/pv-notify", {
-            isSuccess: false,
-            // customerName: "sonal",
-            reason: "Failed to retrieve product details.",
-          });
-        }
+      console.log("Prvilege", paramsObject, paramsObject?.privilegeType != "1");
+      console.log(userType != "default" || paramsObject?.privilegeType != "1");
+      console.log(userType != "default" && paramsObject?.privilegeType != "1");
+       console.log('brand id ', paramsObject?.brandId)
+      console.log('shop id ', this?.props?.pvUserDetails?.shop_id)
 
-        if (selectedProDetails) {
+      if (
+        (userType === "default" &&
+          paramsObject?.privilegeType === "1" &&
+          this?.props?.pvUserDetails?.shop_id === paramsObject?.brandId) ||
+        (userType === "parking" && paramsObject?.privilegeType === "3") ||
+        (userType === "dining" &&
+          paramsObject?.privilegeType === "4" &&
+          this?.props?.pvUserDetails?.shop_id === paramsObject?.brandId)
+      ) {
+        if (paramsObject?.mobileNo && paramsObject?.productId) {
+          console.log("Entered If consition");
+          let selectedProDetails = null;
           this.setState({
             ...this.state,
-            productDetails: selectedProDetails?.[0],
+            ...paramsObject,
           });
 
-          let finalCartArray = selectedProDetails?.map((item) => ({
-            ...item,
-            qty: 1,
-          }));
+          const formDataProductDetails = new URLSearchParams();
+          formDataProductDetails.append(
+            "product_merchant_id",
+            paramsObject?.productId
+          );
+          formDataProductDetails.append("product_id", 0);
+          formDataProductDetails.append(
+            "customer_id",
+            paramsObject?.customerId
+          );
+          formDataProductDetails.append("merchant_id", apiData.merchant_id);
+          formDataProductDetails.append("platform", apiData.pv_platform);
+          formDataProductDetails.append("is_privilege", 1);
 
-          const bodyFormData = new URLSearchParams();
-          bodyFormData.append("customer_id", paramsObject?.customerId);
-          bodyFormData.append("merchant_id", apiData.merchant_id);
-          bodyFormData.append("platform", apiData.pv_platform);
-          bodyFormData.append("cart_details", JSON.stringify(finalCartArray));
-
-          // Add to cart
-          const addToCart = await stockAPI(
-            bodyFormData,
+          // Get product details API call
+          const productDetails = await stockAPI(
+            formDataProductDetails,
             "POST",
-            "/addCart",
+            "/getProductDetails",
             null,
             null,
             undefined,
             true
           );
 
-          if (addToCart?.statusCode === 100) {
-            this.placeOrder();
+          if (
+            productDetails?.response?.productDetails?.length &&
+            productDetails?.statusCode === 100
+          ) {
+            selectedProDetails =
+              productDetails?.response?.productDetails?.filter(
+                (x) => x.id === paramsObject?.productId
+              );
           } else {
             this.setState({ isScanning: false });
             this.props.showLoader(false);
@@ -154,20 +139,424 @@ class Scanner extends Component {
             this.props.history.push("/pv-notify", {
               isSuccess: false,
               // customerName: "sonal",
-              reason: "Invalid / Ineligible offer",
+              reason: "Failed to retrieve product details.",
             });
           }
+
+          if (selectedProDetails) {
+            this.setState({
+              ...this.state,
+              productDetails: selectedProDetails?.[0],
+            });
+
+            let finalCartArray = selectedProDetails?.map((item) => ({
+              ...item,
+              qty: 1,
+            }));
+
+            const bodyFormData = new URLSearchParams();
+            bodyFormData.append("customer_id", paramsObject?.customerId);
+            bodyFormData.append("merchant_id", apiData.merchant_id);
+            bodyFormData.append("platform", apiData.pv_platform);
+            bodyFormData.append("cart_details", JSON.stringify(finalCartArray));
+
+            // Add to cart
+            const addToCart = await stockAPI(
+              bodyFormData,
+              "POST",
+              "/addCart",
+              null,
+              null,
+              undefined,
+              true
+            );
+
+            if (addToCart?.statusCode === 100) {
+              this.placeOrder();
+            } else {
+              this.setState({ isScanning: false });
+              this.props.showLoader(false);
+
+              this.props.history.push("/pv-notify", {
+                isSuccess: false,
+                // customerName: "sonal",
+                reason: "Invalid / Ineligible offer",
+              });
+            }
+          }
+        } else {
+          this.setState({ isScanning: false });
+          this.props.showLoader(false);
+
+          this.props.history.push("/pv-notify", {
+            isSuccess: false,
+            // customerName: "sonal",
+            reason: "Please scan valid QR code",
+          });
         }
       } else {
-        this.setState({ isScanning: false });
-        this.props.showLoader(false);
-
         this.props.history.push("/pv-notify", {
           isSuccess: false,
-          // customerName: "sonal",
-          reason: "Please scan valid QR code",
+          reason: "Invalid / Ineligible offer",
         });
+        this.props.showLoader(false);
+        return;
       }
+
+      // if (userType != "default" || paramsObject?.privilegeType != "1") {
+      //   this.props.history.push("/pv-notify", {
+      //     isSuccess: false,
+      //     reason: "Invalid / Ineligible offer",
+      //   });
+      //   this.props.showLoader(false);
+      //   return;
+      // } else {
+      //   if (paramsObject?.mobileNo && paramsObject?.productId) {
+      //     console.log("Entered If consition");
+      //     let selectedProDetails = null;
+      //     this.setState({
+      //       ...this.state,
+      //       ...paramsObject,
+      //     });
+
+      //     const formDataProductDetails = new URLSearchParams();
+      //     formDataProductDetails.append(
+      //       "product_merchant_id",
+      //       paramsObject?.productId
+      //     );
+      //     formDataProductDetails.append("product_id", 0);
+      //     formDataProductDetails.append(
+      //       "customer_id",
+      //       paramsObject?.customerId
+      //     );
+      //     formDataProductDetails.append("merchant_id", apiData.merchant_id);
+      //     formDataProductDetails.append("platform", apiData.pv_platform);
+      //     formDataProductDetails.append("is_privilege", 1);
+
+      //     // Get product details API call
+      //     const productDetails = await stockAPI(
+      //       formDataProductDetails,
+      //       "POST",
+      //       "/getProductDetails",
+      //       null,
+      //       null,
+      //       undefined,
+      //       true
+      //     );
+
+      //     if (
+      //       productDetails?.response?.productDetails?.length &&
+      //       productDetails?.statusCode === 100
+      //     ) {
+      //       selectedProDetails =
+      //         productDetails?.response?.productDetails?.filter(
+      //           (x) => x.id === paramsObject?.productId
+      //         );
+      //     } else {
+      //       this.setState({ isScanning: false });
+      //       this.props.showLoader(false);
+
+      //       this.props.history.push("/pv-notify", {
+      //         isSuccess: false,
+      //         // customerName: "sonal",
+      //         reason: "Failed to retrieve product details.",
+      //       });
+      //     }
+
+      //     if (selectedProDetails) {
+      //       this.setState({
+      //         ...this.state,
+      //         productDetails: selectedProDetails?.[0],
+      //       });
+
+      //       let finalCartArray = selectedProDetails?.map((item) => ({
+      //         ...item,
+      //         qty: 1,
+      //       }));
+
+      //       const bodyFormData = new URLSearchParams();
+      //       bodyFormData.append("customer_id", paramsObject?.customerId);
+      //       bodyFormData.append("merchant_id", apiData.merchant_id);
+      //       bodyFormData.append("platform", apiData.pv_platform);
+      //       bodyFormData.append("cart_details", JSON.stringify(finalCartArray));
+
+      //       // Add to cart
+      //       const addToCart = await stockAPI(
+      //         bodyFormData,
+      //         "POST",
+      //         "/addCart",
+      //         null,
+      //         null,
+      //         undefined,
+      //         true
+      //       );
+
+      //       if (addToCart?.statusCode === 100) {
+      //         this.placeOrder();
+      //       } else {
+      //         this.setState({ isScanning: false });
+      //         this.props.showLoader(false);
+
+      //         this.props.history.push("/pv-notify", {
+      //           isSuccess: false,
+      //           // customerName: "sonal",
+      //           reason: "Invalid / Ineligible offer",
+      //         });
+      //       }
+      //     }
+      //   } else {
+      //     this.setState({ isScanning: false });
+      //     this.props.showLoader(false);
+
+      //     this.props.history.push("/pv-notify", {
+      //       isSuccess: false,
+      //       // customerName: "sonal",
+      //       reason: "Please scan valid QR code",
+      //     });
+      //   }
+      // }
+
+      // if (userType != "parking" || paramsObject?.privilegeType != "3") {
+      //   this.props.history.push("/pv-notify", {
+      //     isSuccess: false,
+      //     reason: "Invalid / Ineligible offer",
+      //   });
+      //   this.props.showLoader(false);
+      //   return;
+      // } else {
+      //   if (paramsObject?.mobileNo && paramsObject?.productId) {
+      //     console.log("Entered If consition");
+      //     let selectedProDetails = null;
+      //     this.setState({
+      //       ...this.state,
+      //       ...paramsObject,
+      //     });
+
+      //     const formDataProductDetails = new URLSearchParams();
+      //     formDataProductDetails.append(
+      //       "product_merchant_id",
+      //       paramsObject?.productId
+      //     );
+      //     formDataProductDetails.append("product_id", 0);
+      //     formDataProductDetails.append(
+      //       "customer_id",
+      //       paramsObject?.customerId
+      //     );
+      //     formDataProductDetails.append("merchant_id", apiData.merchant_id);
+      //     formDataProductDetails.append("platform", apiData.pv_platform);
+      //     formDataProductDetails.append("is_privilege", 1);
+
+      //     // Get product details API call
+      //     const productDetails = await stockAPI(
+      //       formDataProductDetails,
+      //       "POST",
+      //       "/getProductDetails",
+      //       null,
+      //       null,
+      //       undefined,
+      //       true
+      //     );
+
+      //     if (
+      //       productDetails?.response?.productDetails?.length &&
+      //       productDetails?.statusCode === 100
+      //     ) {
+      //       selectedProDetails =
+      //         productDetails?.response?.productDetails?.filter(
+      //           (x) => x.id === paramsObject?.productId
+      //         );
+      //     } else {
+      //       this.setState({ isScanning: false });
+      //       this.props.showLoader(false);
+
+      //       this.props.history.push("/pv-notify", {
+      //         isSuccess: false,
+      //         // customerName: "sonal",
+      //         reason: "Failed to retrieve product details.",
+      //       });
+      //     }
+
+      //     if (selectedProDetails) {
+      //       this.setState({
+      //         ...this.state,
+      //         productDetails: selectedProDetails?.[0],
+      //       });
+
+      //       let finalCartArray = selectedProDetails?.map((item) => ({
+      //         ...item,
+      //         qty: 1,
+      //       }));
+
+      //       const bodyFormData = new URLSearchParams();
+      //       bodyFormData.append("customer_id", paramsObject?.customerId);
+      //       bodyFormData.append("merchant_id", apiData.merchant_id);
+      //       bodyFormData.append("platform", apiData.pv_platform);
+      //       bodyFormData.append("cart_details", JSON.stringify(finalCartArray));
+
+      //       // Add to cart
+      //       const addToCart = await stockAPI(
+      //         bodyFormData,
+      //         "POST",
+      //         "/addCart",
+      //         null,
+      //         null,
+      //         undefined,
+      //         true
+      //       );
+
+      //       if (addToCart?.statusCode === 100) {
+      //         this.placeOrder();
+      //       } else {
+      //         this.setState({ isScanning: false });
+      //         this.props.showLoader(false);
+
+      //         this.props.history.push("/pv-notify", {
+      //           isSuccess: false,
+      //           // customerName: "sonal",
+      //           reason: "Invalid / Ineligible offer",
+      //         });
+      //       }
+      //     }
+      //   } else {
+      //     this.setState({ isScanning: false });
+      //     this.props.showLoader(false);
+
+      //     this.props.history.push("/pv-notify", {
+      //       isSuccess: false,
+      //       // customerName: "sonal",
+      //       reason: "Please scan valid QR code",
+      //     });
+      //   }
+      // }
+
+      // if (userType != "dining" || paramsObject?.privilegeType != "4") {
+      //   this.props.history.push("/pv-notify", {
+      //     isSuccess: false,
+      //     reason: "Invalid / Ineligible offer",
+      //   });
+      //   this.props.showLoader(false);
+      //   return;
+      // } else {
+      //   if (paramsObject?.mobileNo && paramsObject?.productId) {
+      //     console.log("Entered If consition");
+      //     let selectedProDetails = null;
+      //     this.setState({
+      //       ...this.state,
+      //       ...paramsObject,
+      //     });
+
+      //     const formDataProductDetails = new URLSearchParams();
+      //     formDataProductDetails.append(
+      //       "product_merchant_id",
+      //       paramsObject?.productId
+      //     );
+      //     formDataProductDetails.append("product_id", 0);
+      //     formDataProductDetails.append(
+      //       "customer_id",
+      //       paramsObject?.customerId
+      //     );
+      //     formDataProductDetails.append("merchant_id", apiData.merchant_id);
+      //     formDataProductDetails.append("platform", apiData.pv_platform);
+      //     formDataProductDetails.append("is_privilege", 1);
+
+      //     // Get product details API call
+      //     const productDetails = await stockAPI(
+      //       formDataProductDetails,
+      //       "POST",
+      //       "/getProductDetails",
+      //       null,
+      //       null,
+      //       undefined,
+      //       true
+      //     );
+
+      //     if (
+      //       productDetails?.response?.productDetails?.length &&
+      //       productDetails?.statusCode === 100
+      //     ) {
+      //       selectedProDetails =
+      //         productDetails?.response?.productDetails?.filter(
+      //           (x) => x.id === paramsObject?.productId
+      //         );
+      //     } else {
+      //       this.setState({ isScanning: false });
+      //       this.props.showLoader(false);
+
+      //       this.props.history.push("/pv-notify", {
+      //         isSuccess: false,
+      //         // customerName: "sonal",
+      //         reason: "Failed to retrieve product details.",
+      //       });
+      //     }
+
+      //     if (selectedProDetails) {
+      //       this.setState({
+      //         ...this.state,
+      //         productDetails: selectedProDetails?.[0],
+      //       });
+
+      //       let finalCartArray = selectedProDetails?.map((item) => ({
+      //         ...item,
+      //         qty: 1,
+      //       }));
+
+      //       const bodyFormData = new URLSearchParams();
+      //       bodyFormData.append("customer_id", paramsObject?.customerId);
+      //       bodyFormData.append("merchant_id", apiData.merchant_id);
+      //       bodyFormData.append("platform", apiData.pv_platform);
+      //       bodyFormData.append("cart_details", JSON.stringify(finalCartArray));
+
+      //       // Add to cart
+      //       const addToCart = await stockAPI(
+      //         bodyFormData,
+      //         "POST",
+      //         "/addCart",
+      //         null,
+      //         null,
+      //         undefined,
+      //         true
+      //       );
+
+      //       if (addToCart?.statusCode === 100) {
+      //         this.placeOrder();
+      //       } else {
+      //         this.setState({ isScanning: false });
+      //         this.props.showLoader(false);
+
+      //         this.props.history.push("/pv-notify", {
+      //           isSuccess: false,
+      //           // customerName: "sonal",
+      //           reason: "Invalid / Ineligible offer",
+      //         });
+      //       }
+      //     }
+      //   } else {
+      //     this.setState({ isScanning: false });
+      //     this.props.showLoader(false);
+
+      //     this.props.history.push("/pv-notify", {
+      //       isSuccess: false,
+      //       // customerName: "sonal",
+      //       reason: "Please scan valid QR code",
+      //     });
+      //   }
+      // }
+
+      // if (
+      //   (invalidUserType || invalidPrivilege) &&
+      //   !(
+      //     allowedRoles.indexOf(userType) ==
+      //     allowedPrivileges.indexOf(Number(paramsObject?.privilegeType))
+      //   )
+      // ) {
+      //   this.props.history.push("/pv-notify", {
+      //     isSuccess: false,
+      //     reason: "Invalid / Ineligible offer",
+      //   });
+      //   this.props.showLoader(false);
+      //   // this.setState({ isScanning: false });
+      //   return;
+      // }
     } catch (err) {
       this.setState({ isScanning: false });
       this.props.showLoader(false);
@@ -186,7 +575,6 @@ class Scanner extends Component {
       reason: "Error during QR scan: " + err.message,
     });
   }
-
 
   placeOrder = () => {
     this.props.showLoader(true);

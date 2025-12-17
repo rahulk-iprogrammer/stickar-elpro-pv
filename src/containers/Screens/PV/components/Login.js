@@ -3,22 +3,13 @@ import { withRouter } from "react-router-dom";
 import { styles } from "./LoginStyles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
-import QrReader from "react-qr-reader";
-
 import { stockAPI } from "../../../../common/axiosInstance";
 import { openAlertBox } from "../../../../common/AlertMessage/AlertMessage";
 import { apiData } from "../../../../common/common-types";
-import down_arrow from "../../../../assets/icons/submit_bill/toggle_closed_btn_icon.svg";
 import mobileicon from "../../../../assets/icons/login/mobileicon.svg";
-import { getStorageItem, setStorageItem } from "../../../../common/localStorage";
-import { encrypt } from "../../../../crypto-helper";
-import { isPWAInstalled } from "../../../../common/commonFunctions";
-
+import {  setStorageItem } from "../../../../common/localStorage";
 class Login extends Component {
   constructor(props) {
     super(props);

@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/styles";
 import accountIcon from "../../../assets/icons/header/account.svg";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import AppBar from "@material-ui/core/AppBar";
-import { Toolbar, Typography, Grid, IconButton } from "@material-ui/core";
+import { Toolbar, Typography } from "@material-ui/core";
 import bell from "../../../assets/icons/header/bell.svg";
 import { connect } from "react-redux";
 import { changeActiveTab, logoutPvUser } from "../../../App/redux/action";
@@ -68,7 +68,7 @@ const styles = (theme) => {
     },
     mainHeader: {
       backgroundColor: theme.palette.primary.main,
-      borderBottom: `1px solid ${theme.palette.header.headerBottomBorder}`,
+      borderBottom: `1px solid ${theme.palette.commonIcon.golden}`,
       height: "100%",
       display: "flex",
       justifyContent: "space-between",
@@ -105,7 +105,7 @@ const styles = (theme) => {
     },
     bellIcons: {
       cursor: "pointer",
-      backgroundColor: theme.palette.dashBoardheadText.color,
+      backgroundColor: theme.palette.commonIcon.golden,
       " -webkit-mask-image": `url(.${bell})`,
       "mask-image": `url(.${bell})`,
       mask: `url(.${bell}) no-repeat center / contain`,
@@ -123,6 +123,10 @@ const styles = (theme) => {
       whiteSpace: "nowrap",
       overflow: "hidden",
       textOverflow: "ellipsis",
+      transition: "color 0.2s ease",
+      "&:hover": {
+        color: theme.palette.commonIcon.golden,
+      },
       [theme.breakpoints.down("641")]: {
         fontSize: "22px",
       },
@@ -159,7 +163,7 @@ const styles = (theme) => {
     },
     accountIconCss: {
       cursor: "pointer",
-      backgroundColor: theme.palette.dashBoardheadText.color,
+      backgroundColor: theme.palette.commonIcon.golden,
       " -webkit-mask-image": `url(.${accountIcon})`,
       "mask-image": `url(.${accountIcon})`,
       mask: `url(.${accountIcon}) no-repeat center / contain`,
@@ -270,10 +274,9 @@ class HeaderPvDashboard extends Component {
   handleBellIconClicked = () => {
     this.props.history.push("/notifications");
   };
-  logoutUser = async() => {
-    await this.props.logoutPvUser()
+  logoutUser = async () => {
+    await this.props.logoutPvUser();
     await this.props.history.push("/pv");
-   
   };
 
   render() {
@@ -342,6 +345,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(withStyles(styles, { withTheme: true })(HeaderPvDashboard))
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(withStyles(styles, { withTheme: true })(HeaderPvDashboard)));

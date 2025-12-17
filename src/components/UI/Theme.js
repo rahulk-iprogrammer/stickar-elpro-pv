@@ -108,11 +108,19 @@ export const red =
     merchantColor[apiData.merchant_id] ? apiData.merchant_id : "default"
   ].red;
 
+export const goldenColor =
+  merchantColor[
+    merchantColor[apiData.merchant_id] ? apiData.merchant_id : "default"
+  ].goldenColor;
+
 const theme = createMuiTheme();
 export default createMuiTheme({
   palette: {
     primary: {
       main: `${primaryOrange}`,
+    },
+    commonIcon: {
+      golden: `${goldenColor}`,
     },
     common: {
       globalBackground: `${globalBackground}`,
@@ -141,7 +149,7 @@ export default createMuiTheme({
     footer: {
       selected: `${selectedTab}`,
       default: `${lightGrey}`,
-      selectedIcon: `${primaryOrange}`,
+      selectedIcon: `${goldenColor}`,
     },
     tier: {
       gold: `${gold}`,
@@ -189,7 +197,7 @@ export default createMuiTheme({
           backgroundColor: `${borderGrey} !important`,
         },
       },
-      dangerButtons:  {
+      dangerButtons: {
         textTransform: "none",
         width: "100%",
         // height: '48px',

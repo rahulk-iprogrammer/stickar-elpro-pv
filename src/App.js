@@ -24,13 +24,13 @@ import Maintainance from "./components/Maintainance";
 
 import InstructionDialog from "./components/InstructionDialog/InstructionDialog";
 import MiBrowserDialog from "./components/MiBrowserDialog/MiBrowserDialog";
-import platform from "platform";
+// import platform from "platform";
 import { stockAPI } from "./common/axiosInstance";
-import { openAlertBox } from "./common/AlertMessage/AlertMessage";
+// import { openAlertBox } from "./common/AlertMessage/AlertMessage";
 import HandleOreintations from "./hoc/HandleOreintations";
 import * as serviceWorker from './serviceWorker';
-import swConfig from './swConfig';
-import { Button } from "@material-ui/core";
+// import swConfig from './swConfig';
+// import { Button } from "@material-ui/core";
 import { apiData } from "./common/common-types";
 import PvNotificationContainer from "./containers/Screens/PVNotification/PvNotificationContainer";
 import { url_details } from "./containers/Screens/PV/redux/action";
@@ -125,8 +125,8 @@ class App extends Component {
   //   );
   // };
   OnServiceWorkerUpdate = async registration => {
-    const { enqueueSnackbar } = this.props;
-    const { newVersionAvailable } = this.state
+    // const { enqueueSnackbar } = this.props;
+    // const { newVersionAvailable } = this.state
     await this.setState({
       waitingWorker: registration && registration.waiting,
       newVersionAvailable: true
