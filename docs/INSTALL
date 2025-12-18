@@ -4,7 +4,7 @@ BASIC INSTALLATION
 
 APPLICATION CODE
 	cd /var/www/html;
-	git clone https://github.com/iprogrammers/stickar-customer-app.git
+	git clone https://github.com/iprogrammers/stickar-elpro-pv.git
     cd stickar-customer-app
 
 FOR DEVELOPER (User development branch)

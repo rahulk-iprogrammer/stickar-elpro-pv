@@ -1,4 +1,4 @@
-import { openAlertBox } from "./common/AlertMessage/AlertMessage";
+// import { openAlertBox } from "./common/AlertMessage/AlertMessage";
 
 export default {
   onUpdate: (registration) => {

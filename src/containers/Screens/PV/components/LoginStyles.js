@@ -239,7 +239,7 @@ export const styles = (theme) => {
       "& div": {
         height: "92px",
         "& fieldset": {
-          borderColor: "#e4e4e4 !important",
+          borderColor: `${theme.palette.commonIcon.golden} !important`,
         },
       },
       "&& input": {
@@ -321,7 +321,7 @@ export const styles = (theme) => {
       "& .MuiOutlinedInput-root": {
         "&.Mui-focused fieldset": {
           borderWidth: "1px",
-          borderColor: "#e4e4e4 !important",
+          borderColor: `${theme.palette.commonIcon.golden} !important`,
         },
       },
     },
