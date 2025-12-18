@@ -50,6 +50,8 @@ export const styles = (theme) => {
       height: "fit-content",
       margin: "22px 0px",
       padding: "20px",
+      border: `1px solid ${theme.palette.commonIcon.golden} !important`,
+      boxShadow: "none !important", 
       [theme.breakpoints.down("641")]: {
         // height: 125,
         margin: "20px 0px",

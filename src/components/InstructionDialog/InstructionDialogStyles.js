@@ -1,5 +1,5 @@
 import share from "../../assets/icons/instruction_dialog/share.svg";
-import { primaryOrange } from "../UI/Theme";
+import { goldenColor } from "../UI/Theme";
 
 export const styles = (theme) => {
   return {
@@ -206,7 +206,7 @@ export const styles = (theme) => {
       "-webkit-mask": `url(.${share}) no-repeat center / contain`,
     },
     a2hs: {
-      color: `${primaryOrange}`,
+      color: `${goldenColor}`,
       fontWeight: "bold",
     },
     appLogoContainer: {

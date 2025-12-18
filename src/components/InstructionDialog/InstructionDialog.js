@@ -25,7 +25,7 @@ class InstructionDialog extends PureComponent {
             </div>
             <div className={classes.instructionContainer}>
               <Typography className={classes.heading}>
-                Install Centrio Rewards PV
+                Install Elpro Elite Rewards PV
               </Typography>
               <Typography className={classes.subHeading}>
                 Install this application on your home screen for quick and easy
@@ -34,7 +34,7 @@ class InstructionDialog extends PureComponent {
               <Typography className={classes.just_tap}>
                 Just tap{" "}
                 <i className={classes.shareIcon + " " + classes.shareIconCss} />{" "}
-                then '<span className={classes.a2hs}>Add to Home Screen</span>'
+                then <span className={classes.a2hs}>'Add to Home Screen'</span>
                 {/* Just click on '
               <span className={classes.a2hs}>Add to Home Screen</span>' from
               your browser menu bar. */}
@@ -61,7 +61,7 @@ class InstructionDialog extends PureComponent {
             </div>
             <div className={classes.instructionContainer}>
               <Typography className={classes.heading}>
-                Install Centrio Rewards PV
+                Install Elpro Elite Rewards PV
               </Typography>
               <Typography className={classes.subHeading}>
                 Install this application on your home screen for quick and easy
@@ -69,13 +69,13 @@ class InstructionDialog extends PureComponent {
               </Typography>
               <Typography className={classes.just_tap1}>
                 {/* Just tap <i className={classes.shareIcon + ' ' + classes.shareIconCss} /> then '<span className={classes.a2hs}>Add to Home Screen</span>' */}
-                Just click on '
+                Just click on 
                 {platform.name === "Firefox Mobile" ? (
-                  <span className={classes.a2hs}>Install</span>
+                  <span className={classes.a2hs}>'Install'</span>
                 ) : (
-                  <span className={classes.a2hs}>Add to Home Screen</span>
+                  <span className={classes.a2hs}>'Add to Home Screen'</span>
                 )}
-                ' from your browser menu bar.
+                 from your browser menu bar.
               </Typography>
               {/* <div className={classes.video}>
             <iframe

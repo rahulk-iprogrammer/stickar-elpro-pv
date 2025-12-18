@@ -3,7 +3,7 @@ import classnames from "classnames";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 
 import { makeStyles } from "@material-ui/core/styles";
-import offers_active from "../../../assets/icons/footer/offers_active.svg";
+// import offers_active from "../../../assets/icons/footer/offers_active.svg";
 import scan_active from "../../../assets/icons/footer/scan-icon.svg";
 import scan_history_active from "../../../assets/icons/footer/scanHistory.svg";
 
@@ -109,30 +109,30 @@ const useStyles = makeStyles((theme) => {
     },
 
     scan_active: {
-      backgroundColor: theme.palette.footer.selectedIcon,
-      " -webkit-mask-image": `url(..${scan_active})`,
+      backgroundColor: theme.palette.text.primary,
+      "-webkit-mask-image": `url(..${scan_active})`,
       "mask-image": `url(..${scan_active})`,
       mask: `url(..${scan_active}) no-repeat center / contain`,
       "-webkit-mask": `url(..${scan_active}) no-repeat center / contain`,
     },
     scan_deactive: {
-      backgroundColor: theme.palette.footer.default,
-      " -webkit-mask-image": `url(..${scan_active})`,
+      backgroundColor: theme.palette.footer.selectedIcon,
+      "-webkit-mask-image": `url(..${scan_active})`,
       "mask-image": `url(..${scan_active})`,
       mask: `url(..${scan_active}) no-repeat center / contain`,
       "-webkit-mask": `url(..${scan_active}) no-repeat center / contain`,
     },
 
     scan_history_active: {
-      backgroundColor: theme.palette.footer.selectedIcon,
-      " -webkit-mask-image": `url(..${scan_history_active})`,
+      backgroundColor: theme.palette.text.primary,
+      "-webkit-mask-image": `url(..${scan_history_active})`,
       "mask-image": `url(..${scan_history_active})`,
       mask: `url(..${scan_history_active}) no-repeat center / contain`,
       "-webkit-mask": `url(..${scan_history_active}) no-repeat center / contain`,
     },
     scan_history_deactive: {
-      backgroundColor: theme.palette.footer.default,
-      " -webkit-mask-image": `url(..${scan_history_active})`,
+      backgroundColor: theme.palette.footer.selectedIcon,
+      "-webkit-mask-image": `url(..${scan_history_active})`,
       "mask-image": `url(..${scan_history_active})`,
       mask: `url(..${scan_history_active}) no-repeat center / contain`,
       "-webkit-mask": `url(..${scan_history_active}) no-repeat center / contain`,
