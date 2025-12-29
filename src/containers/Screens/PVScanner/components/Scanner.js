@@ -67,8 +67,8 @@ class Scanner extends Component {
       // const invalidUserType = !allowedRoles.includes(userType);
 
       console.log("uSER tYPE", userType);
-      console.log('brand id ', paramsObject?.brandId)
-      console.log('shop id ', this?.props?.pvUserDetails?.shop_id)
+      console.log("brand id ", paramsObject?.brandId);
+      console.log("shop id ", this?.props?.pvUserDetails?.shop_id);
       // console.log("ALLOWED rOLES", allowedRoles);
       // console.log("Invalid User Tyoe", invalidUserType);
 
@@ -79,17 +79,18 @@ class Scanner extends Component {
       console.log("Prvilege", paramsObject, paramsObject?.privilegeType != "1");
       console.log(userType != "default" || paramsObject?.privilegeType != "1");
       console.log(userType != "default" && paramsObject?.privilegeType != "1");
-       console.log('brand id ', paramsObject?.brandId)
-      console.log('shop id ', this?.props?.pvUserDetails?.shop_id)
+      console.log("brand id ", paramsObject?.brandId);
+      console.log("shop id ", this?.props?.pvUserDetails?.shop_id);
+      console.log("privilege 1: ", paramsObject?.privilegeType,  userType, );
 
       if (
         (userType === "default" &&
-          paramsObject?.privilegeType === "1" &&
-          this?.props?.pvUserDetails?.shop_id === paramsObject?.brandId) ||
-        (userType === "parking" && paramsObject?.privilegeType === "3") ||
+          paramsObject?.privilegeType == "1" &&
+          this?.props?.pvUserDetails?.shop_id == paramsObject?.brandId) ||
+        (userType === "parking" && paramsObject?.privilegeType == "3") ||
         (userType === "dining" &&
-          paramsObject?.privilegeType === "4" &&
-          this?.props?.pvUserDetails?.shop_id === paramsObject?.brandId)
+          paramsObject?.privilegeType == "4" &&
+          this?.props?.pvUserDetails?.shop_id == paramsObject?.brandId)
       ) {
         if (paramsObject?.mobileNo && paramsObject?.productId) {
           console.log("Entered If consition");
@@ -180,7 +181,7 @@ class Scanner extends Component {
               this.props.history.push("/pv-notify", {
                 isSuccess: false,
                 // customerName: "sonal",
-                reason: "Invalid / Ineligible offer",
+                reason: "Invalid / Ineligible offer 1",
               });
             }
           }
@@ -197,7 +198,7 @@ class Scanner extends Component {
       } else {
         this.props.history.push("/pv-notify", {
           isSuccess: false,
-          reason: "Invalid / Ineligible offer",
+          reason: "Invalid / Ineligible offer 2",
         });
         this.props.showLoader(false);
         return;
