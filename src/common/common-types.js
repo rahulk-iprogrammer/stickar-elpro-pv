@@ -6,7 +6,7 @@ const { REACT_APP_BASE_URL, NODE_ENV } = process.env;
 // console.warn(REACT_APP_BASE_URL);
 console.warn(NODE_ENV);
 export const apiData = {baseUrl: NODE_ENV === "development" ? "https://stage-api.technovatechnologys.com" : REACT_APP_BASE_URL,
-  merchant_id: 10076, //10076
+  merchant_id: 10073, //10073 <--production
   platform: 4,
   appVersion: 4.0,
   login_through: 2,
