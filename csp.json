@@ -22,7 +22,7 @@
           ],
           "connect-src": [
             "'self'",
-            "https://stage-api.technovatechnologys.com",
+            "https://uat-api.technovatechnologys.com",
             "https://maps.googleapis.com",
             "https://maps.google.com",
             "https://api.whatsapp.com",
@@ -72,7 +72,7 @@
       ],
       "connect-src": [
         "'self'",
-        "https://stage-api.technovatechnologys.com",
+        "https://uat-api.technovatechnologys.com",
         "https://maps.googleapis.com",
         "https://maps.google.com",
         "https://api.whatsapp.com",
