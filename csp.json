@@ -116,8 +116,8 @@
         "https://maps.googleapis.com",
         "https://maps.google.com",
         "https://www.gstatic.com",
-        "https://maps.gstatic.com"
-        
+        "https://maps.gstatic.com",
+        "https://asset.boomerup.com"
       ],
       "connect-src": [
         "'self'",
